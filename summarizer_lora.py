@@ -132,7 +132,7 @@ quantization_config=BitsAndBytesConfig(load_in_4bit=True,
 model = AutoModelForCausalLM.from_pretrained(
     args.model_path, 
     dtype=torch.bfloat16, 
-    #quantization_config=quantization_config,
+    quantization_config=quantization_config,
     attn_implementation="eager"                 # Use "flash_attention_2" when running on Ampere or newer GPU
     )
 
@@ -148,9 +148,10 @@ lora_config=LoraConfig(
     target_modules= ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj",],
     task_type="CAUSAL_LM",
 )
-#model = get_peft_model(model, lora_config)
-#if accelerator.is_main_process: model.print_trainable_parameters()
-#model.config.use_cache = False
+model = get_peft_model(model, lora_config)
+if accelerator.is_main_process: model.print_trainable_parameters()
+model.config.use_cache = False
+
 
 # Define training parameters and run training
 training_args = SFTConfig(
@@ -191,6 +192,10 @@ accelerator.wait_for_everyone()
 e = time.time()
 if accelerator.is_main_process: print(f"[INFO] Fine-tuning done.")
 if accelerator.is_main_process: print(f"[INFO] Elapsed fine-tuining time {e-s} sec.")
+
+
+
+
 
 
 
