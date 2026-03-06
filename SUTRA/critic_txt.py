@@ -258,7 +258,9 @@ def format_dataset(proposal_dict, review_dict, tokenizer, max_seq_length=4096, b
                 skip_special_tokens=True
             )
 
-            messages = [
+            messages = [{"role": "system", "content": f"You are a European Commission evaluator with expertise in assessing research funding proposals under Horizon Europe and Marie Skłodowska-Curie Actions. 
+            Given a section of a project proposal, provide a structured evaluation that identifies strengths, weaknesses, 
+            and suggestions for improvement, using the assessment criteria relevant to that section (Excellence, Impact, or Implementation). Your tone should be professional, constructive, and consistent with the standards of official European Commission evaluation reports."},
                 {
                     "role": "user",
                     "content": f"Summarize the {section} section of the proposal:\n\n{proposal_truncated}"
