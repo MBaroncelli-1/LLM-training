@@ -205,7 +205,9 @@ def format_dataset(proposals, abstracts, tokenizer, max_seq_length=4096, buffer=
             skip_special_tokens=True
         )
 
-        messages = [
+        messages = [{"role": "system", "content": f"You are an expert scientific writer specialising in European research funding proposals.
+        Given a full project proposal, your task is to write a concise, accurate abstract that captures the research objectives, methodology, expected outcomes, and relevance to the funding programme.
+        The abstract should be written in formal academic English, be self-contained, and not exceed 250 words." }
             {
                 "role": "user",
                 "content": f"Summarize the following proposal:\n\n{proposal_truncated}"
