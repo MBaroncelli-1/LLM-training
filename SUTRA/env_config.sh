@@ -16,6 +16,7 @@ pip3 install -r requirements.txt
 mkdir -p $HF_MODEL_DIR
 export HF_HOME=$HF_MODEL_DIR
 export HF_HUB_CACHE=$HF_MODEL_DIR
+export HF_TOKEN=your_huggingface_token
 
 # Mistral7B
 huggingface-cli download mistralai/Mistral-7B-Instruct-v0.3
